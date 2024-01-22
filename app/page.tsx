@@ -4,6 +4,7 @@ import ClientOnly from "./components/ClientOnly";
 import Container from "./components/Container";
 import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
+import SearchModal from "./components/modals/SearchModal";
 import Navbar from "./components/navbar/NavBar";
 import ToasterProvider from "./providers/ToasterProvider";
 
@@ -18,9 +19,9 @@ export default async function Home() {
       <div>
         {/* <ToasterProvider />
         <LoginModal />
-        <RegisterModal />
+        <RegisterModal /> */}
         <SearchModal />
-        <RentModal /> */}
+
         <ToasterProvider />
         <RegisterModal />
         <LoginModal />

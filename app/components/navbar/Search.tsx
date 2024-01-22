@@ -5,11 +5,11 @@ import { useMemo } from "react";
 import { BiSearch } from "react-icons/bi";
 import { differenceInDays } from "date-fns";
 
-// import useSearchModal from "@/app/hooks/useSearchModal";
+import useSearchModal from "@/app/hooks/useSearchModal";
 import usePlaces from "@/app/hooks/usePlaces";
 
 const Search = () => {
-  //   const searchModal = useSearchModal();
+  const searchModal = useSearchModal();
   const params = useSearchParams();
   const { getByValue } = usePlaces();
 
@@ -52,7 +52,7 @@ const Search = () => {
 
   return (
     <div
-      //   onClick={searchModal.onOpen}
+      onClick={searchModal.onOpen}
       className="
         border-[1px] 
         w-full 
