@@ -4,7 +4,7 @@ import { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
-// import useLoginModal from "@/app/hooks/useLoginModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 // import useRentModal from "@/app/hooks/useRentModal";
 
@@ -18,7 +18,7 @@ interface UserMenuProps {
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const router = useRouter();
 
-  //   const loginModal = useLoginModal();
+  const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
   //   const rentModal = useRentModal();
 
@@ -78,26 +78,19 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           "
         >
           <div className="flex flex-col cursor-pointer">
-            {currentUser ? (
-              <>
-                <MenuItem
-                  label="My bookings"
-                  onClick={() => router.push("/mybookings")}
-                />
-                {/* <MenuItem
-                  label="My reservations"
-                  onClick={() => router.push("/reservations")}
-                /> */}
+            <>
+              <MenuItem
+                label="My bookings"
+                onClick={() => router.push("/mybookings")}
+              />
 
-                <hr />
-                {/* <MenuItem label="Logout" onClick={() => signOut()} /> */}
-              </>
-            ) : (
-              <>
-                {/* <MenuItem label="Login" onClick={loginModal.onOpen} /> */}
-                <MenuItem label="Sign up" onClick={registerModal.onOpen} />
-              </>
-            )}
+              <hr />
+            </>
+
+            <>
+              <MenuItem label="Login" onClick={loginModal.onOpen} />
+              <MenuItem label="Sign up" onClick={registerModal.onOpen} />
+            </>
           </div>
         </div>
       )}

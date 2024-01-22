@@ -2,14 +2,17 @@ import { getCurrentUsers } from "./actions/getCurrentUser";
 import { getRooms } from "./actions/getRooms";
 import ClientOnly from "./components/ClientOnly";
 import Container from "./components/Container";
+import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import Navbar from "./components/navbar/NavBar";
-import RoomsCard from "./rooms/RoomsCard";
+import ToasterProvider from "./providers/ToasterProvider";
 
+import RoomsCard from "./rooms/RoomsCard";
 export default async function Home() {
   const rooms = await getRooms();
-  const currentUser = await getCurrentUsers();
+  // const currentUser = await getCurrentUsers();
   console.log(rooms);
+
   return (
     <ClientOnly>
       <div>
@@ -18,7 +21,9 @@ export default async function Home() {
         <RegisterModal />
         <SearchModal />
         <RentModal /> */}
+        <ToasterProvider />
         <RegisterModal />
+        <LoginModal />
         <Navbar />
       </div>
       <Container>

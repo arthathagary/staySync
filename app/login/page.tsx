@@ -8,12 +8,11 @@ import { toast } from "react-hot-toast";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
-import Heading from "../Heading";
-import Input from "../inputs/Input";
-import Modal from "./Modal";
 import axios from "axios";
+import Heading from "../components/Heading";
+import Input from "../components/inputs/Input";
 
-const LoginModal = () => {
+const LoginPage = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
@@ -35,22 +34,10 @@ const LoginModal = () => {
 
     axios
       .post("/api/login", data)
-      .then((response) => {
-        // Access the response data here
-        const responseData = response.data;
-        console.log(responseData.userData.userRole);
-        localStorage.setItem("token", responseData.token);
-
-        // Your other logic here
+      .then(() => {
         toast.success("Logged in!");
         loginModal.onClose();
-        if (responseData.userData.userRole === "admin") {
-          router.push(`/admin?email=${responseData.email}`);
-        } else if (responseData.userData.userRole === "manager") {
-          router.push(`/manager?email=${responseData.email}`);
-        } else if (responseData.userData.userRole === "user") {
-          router.push(`?email=${responseData.email}`);
-        }
+        router.push("/dashboard");
       })
       .catch((error: any) => {
         toast.error(error);
@@ -64,29 +51,6 @@ const LoginModal = () => {
     loginModal.onClose();
     registerModal.onOpen();
   }, [loginModal, registerModal]);
-
-  const bodyContent = (
-    <div className="flex flex-col gap-4">
-      <Heading title="Welcome back" subtitle="Login to your account!" />
-      <Input
-        id="email"
-        label="Email"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="password"
-        label="Password"
-        type="password"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-    </div>
-  );
 
   const footerContent = (
     <div className="flex flex-col gap-4 mt-3">
@@ -115,17 +79,27 @@ const LoginModal = () => {
   );
 
   return (
-    <Modal
-      disabled={isLoading}
-      isOpen={loginModal.isOpen}
-      title="Login"
-      actionLabel="Continue"
-      onClose={loginModal.onClose}
-      onSubmit={handleSubmit(onSubmit)}
-      body={bodyContent}
-      footer={footerContent}
-    />
+    <div className="flex flex-col gap-4">
+      <Heading title="Welcome back" subtitle="Login to your account!" />
+      <Input
+        id="email"
+        label="Email"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+      <Input
+        id="password"
+        label="Password"
+        type="password"
+        disabled={isLoading}
+        register={register}
+        errors={errors}
+        required
+      />
+    </div>
   );
 };
 
-export default LoginModal;
+export default LoginPage;
