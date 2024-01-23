@@ -62,6 +62,20 @@ const RentModal = () => {
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
 
+  const handleImgUpload = async () => {
+    const data = new FormData();
+    const filePath = imageSrc.target.value;
+    const pathSegments = filePath.split("\\");
+    const filename = pathSegments[pathSegments.length - 1];
+    data.set("file", filename);
+    try {
+      // const res = await axios.post("/api/upload", data);
+      console.log(imageSrc.target.value);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
       shouldDirty: true,
@@ -88,10 +102,11 @@ const RentModal = () => {
     axios
       .post("/api/rooms", data)
       .then(() => {
-        toast.success("Listing created!");
+        toast.success("Rooms created!");
         router.refresh();
         reset();
         setStep(STEPS.CATEGORY);
+        handleImgUpload();
         rentModal.onClose();
       })
       .catch(() => {
@@ -205,6 +220,10 @@ const RentModal = () => {
           onChange={(value) => setCustomValue("imageSrc", value)}
           value={imageSrc}
         /> */}
+        <input
+          type="file"
+          onChange={(value) => setCustomValue("imageSrc", value)}
+        />
       </div>
     );
   }
