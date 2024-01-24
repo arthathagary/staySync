@@ -10,7 +10,7 @@ import usePlaces from "@/app/hooks/usePlaces";
 import Button from "@/app/components/Button";
 import ClientOnly from "@/app/components/ClientOnly";
 
-interface ListingCardProps {
+interface RoomCardProps {
   data: any;
   reservation?: any;
   onAction?: (id: string) => void;
@@ -28,7 +28,7 @@ const RoomsCard = ({
   actionLabel,
   actionId = "",
   currentUser,
-}: ListingCardProps) => {
+}: RoomCardProps) => {
   const router = useRouter();
   const { getByValue } = usePlaces();
 
@@ -88,7 +88,7 @@ const RoomsCard = ({
               group-hover:scale-110 
               transition
             "
-            src={`/${data.imageSrc}`}
+            src={data.imageSrc}
             alt="Rooms"
           />
           <div
@@ -99,7 +99,7 @@ const RoomsCard = ({
           "
           ></div>
         </div>
-        {/* <div className="font-semibold text-lg">{location?.label}</div> */}
+        <div className="font-semibold text-lg">{data.locationValue}</div>
         <div className="font-light text-neutral-500">
           {reservationDate || data.category}
         </div>

@@ -14,8 +14,8 @@ const Search = () => {
   const { getByValue } = usePlaces();
 
   const locationValue = params?.get("locationValue");
-  const startDate = params?.get("startDate");
-  const endDate = params?.get("endDate");
+  // const startDate = params?.get("startDate");
+  // const endDate = params?.get("endDate");
   const guestCount = params?.get("guestCount");
 
   const locationLabel = useMemo(() => {
@@ -26,21 +26,21 @@ const Search = () => {
     return "Anywhere";
   }, [locationValue, getByValue]);
 
-  const durationLabel = useMemo(() => {
-    if (startDate && endDate) {
-      const start = new Date(startDate as string);
-      const end = new Date(endDate as string);
-      let diff = differenceInDays(end, start);
+  // const durationLabel = useMemo(() => {
+  //   if (startDate && endDate) {
+  //     const start = new Date(startDate as string);
+  //     const end = new Date(endDate as string);
+  //     let diff = differenceInDays(end, start);
 
-      if (diff === 0) {
-        diff = 1;
-      }
+  //     if (diff === 0) {
+  //       diff = 1;
+  //     }
 
-      return `${diff} Days`;
-    }
+  //     return `${diff} Days`;
+  //   }
 
-    return "Any Week";
-  }, [startDate, endDate]);
+  //   return "Any Week";
+  // }, [startDate, endDate]);
 
   const guestLabel = useMemo(() => {
     if (guestCount) {
@@ -82,7 +82,7 @@ const Search = () => {
         >
           {locationLabel}
         </div>
-        <div
+        {/* <div
           className="
             hidden 
             sm:block 
@@ -95,7 +95,7 @@ const Search = () => {
           "
         >
           {durationLabel}
-        </div>
+        </div> */}
         <div
           className="
             text-sm 

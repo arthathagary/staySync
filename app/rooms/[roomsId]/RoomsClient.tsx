@@ -103,7 +103,7 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
         <div className="flex flex-col gap-6">
           <ListingHead
             title={rooms.title}
-            imageSrc={`/${rooms.imageSrc}`}
+            imageSrc={rooms.imageSrc}
             locationValue={rooms.locationValue}
             id={rooms.id}
             currentUser={currentUser}

@@ -17,6 +17,7 @@ import { categories } from "@/app/components/navbar/Categories";
 // import ImageUpload from "../inputs/ImageUpload";
 import Input from "../inputs/Input";
 import Heading from "../Heading";
+import ImageUpload from "../inputs/ImageUpload";
 
 enum STEPS {
   CATEGORY = 0,
@@ -62,19 +63,19 @@ const RentModal = () => {
   const bathroomCount = watch("bathroomCount");
   const imageSrc = watch("imageSrc");
 
-  const handleImgUpload = async () => {
-    const data = new FormData();
-    const filePath = imageSrc.target.value;
-    const pathSegments = filePath.split("\\");
-    const filename = pathSegments[pathSegments.length - 1];
-    data.set("file", filename);
-    try {
-      // const res = await axios.post("/api/upload", data);
-      console.log(imageSrc.target.value);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleImgUpload = async () => {
+  //   const data = new FormData();
+  //   const filePath = imageSrc.target.value;
+  //   const pathSegments = filePath.split("\\");
+  //   const filename = pathSegments[pathSegments.length - 1];
+  //   data.set("file", filename);
+  //   try {
+  //     // const res = await axios.post("/api/upload", data);
+  //     console.log(imageSrc.target.value);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -106,7 +107,6 @@ const RentModal = () => {
         router.refresh();
         reset();
         setStep(STEPS.CATEGORY);
-        handleImgUpload();
         rentModal.onClose();
       })
       .catch(() => {
@@ -216,14 +216,14 @@ const RentModal = () => {
           title="Add a photo of your place"
           subtitle="Show guests what your place looks like!"
         />
-        {/* <ImageUpload
+        <ImageUpload
           onChange={(value) => setCustomValue("imageSrc", value)}
           value={imageSrc}
-        /> */}
-        <input
+        />
+        {/* <input
           type="file"
           onChange={(value) => setCustomValue("imageSrc", value)}
-        />
+        /> */}
       </div>
     );
   }
