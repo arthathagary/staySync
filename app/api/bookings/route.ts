@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
       VALUES (?, ?, ?, ?, ?, ?)
     `,
       values: [
-        1,
+        userId,
         roomId,
         formattedStaryDate,
         formattedEndDate,

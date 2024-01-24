@@ -1,7 +1,7 @@
 "use client";
 
 import axios from "axios";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Range } from "react-date-range";
 import { useRouter } from "next/navigation";
@@ -14,6 +14,7 @@ import { categories } from "@/app/components/navbar/Categories";
 import ListingHead from "./ListingHead";
 import ListingInfo from "./ListingInfo";
 import ListingReservation from "./ListingReservation";
+import { getCurrentUsers } from "@/app/actions/getCurrentUser";
 
 const initialDateRange = {
   startDate: new Date(),
@@ -53,6 +54,22 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
   const [isLoading, setIsLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(rooms.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+  const [currentUserId, setCurrentUserId] = useState("");
+
+  useEffect(() => {
+    const getCurrentUsers = async () => {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(`http://localhost:3000/api/users`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data[0]);
+      setCurrentUserId(response.data[0].id);
+      return response.data[0];
+    };
+    getCurrentUsers();
+  }, []);
 
   const onCreateReservation = useCallback(() => {
     // if (!currentUser) {
@@ -65,7 +82,8 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
         totalPrice,
         startDate: dateRange.startDate,
         endDate: dateRange.endDate,
-        roomsId: rooms?.id,
+        roomId: rooms?.id,
+        userId: currentUserId,
       })
       .then(() => {
         toast.success("Booking reserved!");

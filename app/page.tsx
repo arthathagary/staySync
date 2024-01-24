@@ -15,6 +15,7 @@ import RoomsCard from "./rooms/RoomsCard";
 export default async function Home({ searchParams }: HomeProps) {
   const rooms = await getRooms(searchParams);
   console.log(searchParams);
+
   // const currentUser = await getCurrentUsers();
 
   return (

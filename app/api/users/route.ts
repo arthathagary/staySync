@@ -1,10 +1,49 @@
-import { NextRequest, NextResponse } from "next/server";
+// import { NextRequest, NextResponse } from "next/server";
+// import { query } from "@/app/database/db";
+
+// export async function GET(req: NextRequest) {
+//   const users = await query({
+//     query: "SELECT * FROM users",
+//     values: [],
+//   });
+//   return NextResponse.json(users);
+// }
+
+import { decodeToken } from "@/app/actions/DecodeToken";
+import { findUserByEmail } from "@/app/actions/FindUser";
 import { query } from "@/app/database/db";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
-  const users = await query({
-    query: "SELECT * FROM users",
-    values: [],
+  const tokenWithBearer = req.headers.get("authorization");
+  const token = tokenWithBearer?.replace("Bearer ", "");
+  console.log(token);
+
+  if (!token) {
+    return NextResponse.json({ error: "Unauthorized" });
+  }
+
+  // Decode the token
+  const decodedToken = decodeToken(token);
+  console.log(decodedToken);
+
+  if (!decodedToken) {
+    return NextResponse.json({ error: "Invalid token" });
+  }
+
+  // Find the user based on the decoded token's user ID
+  // const user = findUserById(decodedToken.sub);
+  const user = decodedToken.email;
+  // const userData = findUserByEmail(decodedToken.email);
+  const userData = await query({
+    query: "SELECT * FROM users WHERE email = ?",
+    values: [user],
   });
-  return NextResponse.json(users);
+
+  if (!user) {
+    return NextResponse.json({ error: "User not found" });
+  }
+
+  // Return the user data
+  return NextResponse.json(userData);
 }
