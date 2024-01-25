@@ -28,7 +28,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/database/db.ts"
+    "app/database/db.ts",
+    "app/userBookings"
   ],
   "exclude": ["node_modules"]
 }

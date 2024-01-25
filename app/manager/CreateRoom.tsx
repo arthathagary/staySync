@@ -74,7 +74,7 @@ const CreateRoom = ({ currentUser }: UserMenuProps) => {
           cursor-pointer
         "
             >
-              Reservertion
+              Bookings
             </div>
             <div
               onClick={toggleOpen}

@@ -64,17 +64,26 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data[0]);
-      setCurrentUserId(response.data[0].id);
-      return response.data[0];
+      if (Array.isArray(response.data) && response.data.length > 0) {
+        // Check if the first element has the 'id' property
+        if (response.data[0].id) {
+          setCurrentUserId(response.data[0].id);
+          console.log(response.data[0].id);
+          return response.data[0];
+        } else {
+          console.error("Response does not contain 'id' property");
+        }
+      } else {
+        console.error("Response does not contain data array or is empty");
+      }
     };
     getCurrentUsers();
-  }, []);
+  }, [currentUser, loginModal]);
 
   const onCreateReservation = useCallback(() => {
-    // if (!currentUser) {
-    //   return loginModal.onOpen();
-    // }
+    if (!currentUserId) {
+      return loginModal.onOpen();
+    }
     setIsLoading(true);
 
     axios
@@ -96,7 +105,7 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [totalPrice, dateRange, rooms?.id, router, currentUser, loginModal]);
+  }, [totalPrice, dateRange, rooms?.id, currentUserId, loginModal]);
 
   useEffect(() => {
     if (dateRange.startDate && dateRange.endDate) {

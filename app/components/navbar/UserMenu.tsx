@@ -28,6 +28,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     setIsOpen((value) => !value);
   }, []);
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    router.refresh();
+  };
+
+  const token = localStorage.getItem("token");
   // const onRent = useCallback(() => {
   //   if (!currentUser) {
   //     return loginModal.onOpen();
@@ -81,14 +87,18 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
             <>
               <MenuItem
                 label="My bookings"
-                onClick={() => router.push("/mybookings")}
+                onClick={() => router.push("/userBookings")}
               />
 
               <hr />
             </>
 
             <>
-              <MenuItem label="Login" onClick={loginModal.onOpen} />
+              {!token ? (
+                <MenuItem label="Login" onClick={loginModal.onOpen} />
+              ) : (
+                <MenuItem label="Logout" onClick={logout} />
+              )}
               <MenuItem label="Sign up" onClick={registerModal.onOpen} />
             </>
           </div>

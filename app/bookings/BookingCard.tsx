@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { MouseEventHandler, useCallback, useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { format } from "date-fns";
 
 import usePlaces from "@/app/hooks/usePlaces";
@@ -10,7 +10,7 @@ import usePlaces from "@/app/hooks/usePlaces";
 import Button from "@/app/components/Button";
 import ClientOnly from "@/app/components/ClientOnly";
 
-interface RoomCardProps {
+interface BookingCardProps {
   data: any;
   booking?: any;
   onAction?: (id: string) => void;
@@ -20,7 +20,7 @@ interface RoomCardProps {
   currentUser?: any | null;
 }
 
-const RoomsCard = ({
+const BookingCard = ({
   data,
   booking,
   onAction,
@@ -28,7 +28,7 @@ const RoomsCard = ({
   actionLabel,
   actionId = "",
   currentUser,
-}: RoomCardProps) => {
+}: BookingCardProps) => {
   const router = useRouter();
   const { getByValue } = usePlaces();
 
@@ -64,18 +64,11 @@ const RoomsCard = ({
     return `${format(start, "PP")} - ${format(end, "PP")}`;
   }, [booking]);
 
-  const handleClick: MouseEventHandler<HTMLDivElement> = () => {
-    router.push(`/rooms/${data.id}`);
-  };
-
-  const handleClickBooking: MouseEventHandler<HTMLDivElement> = () => {
-    router.push(`/bookings/${data.id}`);
-  };
   return (
     <>
       {!data.isBooked && (
         <div
-          onClick={!booking ? handleClick : handleClickBooking}
+          onClick={() => router.push(`/rooms/${data.id}`)}
           className="col-span-1 cursor-pointer group"
         >
           <div className="flex flex-col gap-2 w-full">
@@ -131,4 +124,4 @@ const RoomsCard = ({
   );
 };
 
-export default RoomsCard;
+export default BookingCard;
