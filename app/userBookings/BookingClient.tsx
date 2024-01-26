@@ -9,12 +9,12 @@ import Heading from "@/app/components/Heading";
 import Container from "@/app/components/Container";
 import RoomsCard from "@/app/rooms/RoomsCard";
 
-interface TripsClientProps {
+interface BookingClientProps {
   bookings?: any;
   currentUser?: any | null;
 }
 
-const BookingClient: React.FC<TripsClientProps> = ({
+const BookingClient: React.FC<BookingClientProps> = ({
   bookings,
   currentUser,
 }) => {
@@ -28,7 +28,7 @@ const BookingClient: React.FC<TripsClientProps> = ({
       axios
         .delete(`/api/bookings/${id}`)
         .then(() => {
-          toast.success("Re allocate room successfully");
+          toast.success("Room Cancelled successfully");
           router.refresh();
         })
         .catch((error) => {
@@ -40,7 +40,6 @@ const BookingClient: React.FC<TripsClientProps> = ({
     },
     [router]
   );
-  console.log(bookings);
 
   return (
     <Container>
@@ -66,7 +65,7 @@ const BookingClient: React.FC<TripsClientProps> = ({
             actionId={booking.id}
             onAction={onCancel}
             disabled={deletingId === booking.id}
-            actionLabel="Re Allocate Room"
+            actionLabel="Cancel Booking"
             // currentUser={currentUser}
           />
         ))}

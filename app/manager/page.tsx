@@ -3,6 +3,7 @@ import { IListingsParams, getRooms } from "../actions/getRooms";
 import Container from "../components/Container";
 import RoomsCard from "../rooms/RoomsCard";
 import ClientOnly from "../components/ClientOnly";
+import { decodeToken } from "../actions/DecodeToken";
 
 interface HomeProps {
   searchParams: IListingsParams;

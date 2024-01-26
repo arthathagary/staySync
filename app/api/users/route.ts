@@ -1,16 +1,4 @@
-// import { NextRequest, NextResponse } from "next/server";
-// import { query } from "@/app/database/db";
-
-// export async function GET(req: NextRequest) {
-//   const users = await query({
-//     query: "SELECT * FROM users",
-//     values: [],
-//   });
-//   return NextResponse.json(users);
-// }
-
 import { decodeToken } from "@/app/actions/DecodeToken";
-import { findUserByEmail } from "@/app/actions/FindUser";
 import { query } from "@/app/database/db";
 import { NextRequest, NextResponse } from "next/server";
 

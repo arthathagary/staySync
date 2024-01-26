@@ -8,7 +8,6 @@ interface User {
   name: string;
   email: string;
   hashedPassword: string;
-  // ... other fields in your User model
 }
 
 export async function POST(request: Request) {
@@ -56,9 +55,13 @@ export async function POST(request: Request) {
 
     // Password is correct, return user data (excluding hashedPassword)
     const { hashedPassword, ...userData } = user;
-    const token = jwt.sign({ email }, "idnwdiwdnwdwidwdnmwkm", {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { userId: user.id, userRole: user.userRole, email },
+      "idnwdiwdnwdwidwdnmwkm",
+      {
+        expiresIn: "24h",
+      }
+    );
 
     return NextResponse.json({ userData, token });
   } catch (error) {

@@ -5,8 +5,8 @@ import BookingClient from "./BookingClient";
 import ClientOnly from "../components/ClientOnly";
 import EmptyState from "../components/EmptyState";
 import { getCurrentUsers } from "../actions/getCurrentUser";
-import { findUserByEmail } from "../actions/FindUser";
 import { query } from "../database/db";
+import findUserByEmail from "../actions/FindUser";
 
 const BookingDetail = () => {
   const [booking, setBooking] = useState(null);
@@ -15,10 +15,10 @@ const BookingDetail = () => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       const currentUser = await getCurrentUsers({ token });
-      const { email } = currentUser[0];
-      console.log(email);
+      const { email, id } = currentUser[0];
+
       // Fetch the booking data using the token
-      const userBooking = await getUserBooking("2");
+      const userBooking = await getUserBooking(id);
       setBooking(userBooking);
     };
 

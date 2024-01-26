@@ -71,6 +71,7 @@ const RoomsCard = ({
   const handleClickBooking: MouseEventHandler<HTMLDivElement> = () => {
     router.push(`/bookings/${data.id}`);
   };
+
   return (
     <>
       {!data.isBooked && (

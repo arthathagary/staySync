@@ -45,11 +45,11 @@ const LoginModal = () => {
         toast.success("Logged in!");
         loginModal.onClose();
         if (responseData.userData.userRole === "admin") {
-          router.push(`/admin?email=${responseData.email}`);
+          router.push(`/admin`);
         } else if (responseData.userData.userRole === "manager") {
-          router.push(`/manager?email=${responseData.email}`);
+          router.push(`/manager`);
         } else if (responseData.userData.userRole === "user") {
-          router.push(`?email=${responseData.email}`);
+          router.refresh();
         }
       })
       .catch((error: any) => {

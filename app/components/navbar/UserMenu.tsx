@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { use, useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
@@ -10,12 +10,10 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
+import { decodeToken } from "@/app/actions/DecodeToken";
+import Link from "next/link";
 
-interface UserMenuProps {
-  currentUser?: any;
-}
-
-const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
+const UserMenu = () => {
   const router = useRouter();
 
   const loginModal = useLoginModal();
@@ -34,6 +32,9 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   };
 
   const token = localStorage.getItem("token");
+  const { userRole } = decodeToken(token);
+
+  console.log(userRole, "decoded");
   // const onRent = useCallback(() => {
   //   if (!currentUser) {
   //     return loginModal.onOpen();
@@ -64,7 +65,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
       >
         <AiOutlineMenu />
         <div className="hidden md:block">
-          <Avatar src={currentUser?.image} />
+          <Avatar src="" />
         </div>
       </div>
 
@@ -85,10 +86,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
         >
           <div className="flex flex-col cursor-pointer">
             <>
-              <MenuItem
-                label="My bookings"
-                onClick={() => router.push("/userBookings")}
-              />
+              {userRole === "user" && (
+                <MenuItem
+                  label="My bookings"
+                  onClick={() => router.push("/userBookings")}
+                />
+              )}
 
               <hr />
             </>
@@ -101,6 +104,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
               )}
               <MenuItem label="Sign up" onClick={registerModal.onOpen} />
             </>
+            {userRole === "manager" && (
+              <Link href="/manager">
+                {" "}
+                <MenuItem label="Manager Area" />
+              </Link>
+            )}
           </div>
         </div>
       )}
