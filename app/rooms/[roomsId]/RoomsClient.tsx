@@ -5,7 +5,7 @@ import { use, useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import { Range } from "react-date-range";
 import { useRouter } from "next/navigation";
-import { differenceInDays, eachDayOfInterval } from "date-fns";
+import { differenceInDays, eachDayOfInterval, set } from "date-fns";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 
@@ -55,6 +55,9 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
   const [totalPrice, setTotalPrice] = useState(rooms.price);
   const [dateRange, setDateRange] = useState<Range>(initialDateRange);
   const [currentUserId, setCurrentUserId] = useState("");
+  const [fullBoard, setFullBoard] = useState(0);
+  const [halfBoard, setHalfBoard] = useState(0);
+  const [currentUserName, setCurrentUserName] = useState("");
 
   useEffect(() => {
     const getCurrentUsers = async () => {
@@ -68,7 +71,7 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
         // Check if the first element has the 'id' property
         if (response.data[0].id) {
           setCurrentUserId(response.data[0].id);
-          console.log(response.data[0].id);
+          setCurrentUserName(response.data[0].name);
           return response.data[0];
         } else {
           console.error("Response does not contain 'id' property");
@@ -112,12 +115,12 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
       const dayCount = differenceInDays(dateRange.endDate, dateRange.startDate);
 
       if (dayCount && rooms.price) {
-        setTotalPrice(dayCount * rooms.price);
+        setTotalPrice((dayCount + 1) * rooms.price + fullBoard + halfBoard);
       } else {
         setTotalPrice(rooms.price);
       }
     }
-  }, [dateRange, rooms.price]);
+  }, [dateRange, rooms.price, fullBoard, halfBoard]);
 
   return (
     <Container>
@@ -145,7 +148,7 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
             "
           >
             <ListingInfo
-              user={rooms.user}
+              currentUserName={currentUserName}
               category={category}
               description={rooms.description}
               roomCount={rooms.roomCount}
@@ -163,12 +166,16 @@ const RoomsClient = ({ rooms, reservations = [], currentUser }: IRooms) => {
             >
               <ListingReservation
                 price={rooms.price}
+                halfBoardPrice={rooms.halfBoardPrice}
+                fullBoardPrice={rooms.fullBoardPrice}
                 totalPrice={totalPrice}
                 onChangeDate={(value: any) => setDateRange(value)}
                 dateRange={dateRange}
                 onSubmit={onCreateReservation}
                 disabled={isLoading}
                 disabledDates={disabledDates}
+                setFullBoard={(value: any) => setFullBoard(value)}
+                setHalfBoard={(value: any) => setHalfBoard(value)}
               />
             </div>
           </div>

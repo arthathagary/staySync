@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import useRentModal from "@/app/hooks/useRentModal";
 
@@ -18,6 +18,8 @@ import { categories } from "@/app/components/navbar/Categories";
 import Input from "../inputs/Input";
 import Heading from "../Heading";
 import ImageUpload from "../inputs/ImageUpload";
+import useEditRentModal from "@/app/hooks/useEditRentModal";
+import getSpecificRoom from "@/app/actions/getSpecificRoom";
 
 enum STEPS {
   CATEGORY = 0,
@@ -29,12 +31,13 @@ enum STEPS {
   PRICE = 6,
 }
 
-const RentModal = () => {
+const EditRentModal = ({ roomId }: { roomId: string | undefined }) => {
   const router = useRouter();
-  const rentModal = useRentModal();
+  const rentModal = useEditRentModal();
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [room, setRoom] = useState<any>({});
 
   const {
     register,
@@ -102,9 +105,9 @@ const RentModal = () => {
     setIsLoading(true);
 
     axios
-      .post("/api/rooms", data)
+      .put(`/api/rooms/${roomId}`, data)
       .then(() => {
-        toast.success("Rooms created!");
+        toast.success("Rooms Updated Succesfully!");
         router.refresh();
         reset();
         setStep(STEPS.CATEGORY);
@@ -321,4 +324,4 @@ const RentModal = () => {
   );
 };
 
-export default RentModal;
+export default EditRentModal;

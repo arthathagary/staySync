@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useCallback, useState } from "react";
+import { use, useCallback, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
@@ -21,6 +21,8 @@ const UserMenu = () => {
   //   const rentModal = useRentModal();
 
   const [isOpen, setIsOpen] = useState(false);
+  const [token, setToken] = useState<string>("");
+  const [userRole, setUserRole] = useState<string>("");
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
@@ -31,10 +33,15 @@ const UserMenu = () => {
     router.refresh();
   };
 
-  const token = localStorage.getItem("token");
-  const { userRole } = decodeToken(token);
+  useEffect(() => {
+    const jwt = localStorage.getItem("token");
+    setToken(jwt!);
+    const user = decodeToken(token);
+    if (user) {
+      setUserRole(user.userRole);
+    }
+  }, [token]);
 
-  console.log(userRole, "decoded");
   // const onRent = useCallback(() => {
   //   if (!currentUser) {
   //     return loginModal.onOpen();

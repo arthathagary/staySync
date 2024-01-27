@@ -36,7 +36,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
         const { open } = widgetProps;
         return (
           <div
-            onClick={() => widgetProps?.open?.()}
+            onClick={() => open()}
             className="
               relative
               cursor-pointer

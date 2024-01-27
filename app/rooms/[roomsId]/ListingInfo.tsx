@@ -9,11 +9,11 @@ import Avatar from "@/app/components/Avatar";
 import ListingCategory from "./ListingCategory";
 
 interface ListingInfoProps {
-  user: any;
   description: string;
   guestCount: number;
   roomCount: number;
   bathroomCount: number;
+  currentUserName: string;
   category:
     | {
         icon: IconType;
@@ -25,7 +25,7 @@ interface ListingInfoProps {
 }
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
-  user,
+  currentUserName,
   description,
   guestCount,
   roomCount,
@@ -48,8 +48,8 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             gap-2
           "
         >
-          <div>Hosted by {user?.name}</div>
-          <Avatar src={user?.image} />
+          <div>Hello {currentUserName}</div>
+          <Avatar src="" />
         </div>
         <div
           className="

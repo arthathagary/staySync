@@ -1,8 +1,14 @@
 import jwt from "jsonwebtoken";
 
-export const decodeToken = (token: any) => {
+interface JwtPayload {
+  id: string;
+  userRole: string;
+  email: string;
+}
+
+export const decodeToken = (token: string) => {
   try {
-    const decoded = jwt.decode(token);
+    const decoded = jwt.decode(token) as JwtPayload;
     return decoded;
   } catch (error) {
     // Handle decoding errors

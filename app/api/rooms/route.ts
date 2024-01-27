@@ -66,6 +66,8 @@ export async function POST(req: NextRequest) {
       price,
       title,
       description,
+      fullBoard,
+      halfBoard,
       // createdAt,
     } = await req.json();
     let filename = "";
@@ -77,7 +79,7 @@ export async function POST(req: NextRequest) {
     // Perform the necessary operations with the data (e.g., insert into the database)
     await query({
       query:
-        "INSERT INTO rooms (title, description,imageSrc,category,roomCount,bathroomCount,guestCount,price,locationValue) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)",
+        "INSERT INTO rooms (title, description,imageSrc,category,roomCount,bathroomCount,guestCount,price,locationValue,fullBoardPrice,halfBoardPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?)",
       values: [
         title,
         description,
@@ -88,6 +90,8 @@ export async function POST(req: NextRequest) {
         guestCount,
         price,
         location.value,
+        fullBoard,
+        halfBoard,
         // userId,
       ],
     });

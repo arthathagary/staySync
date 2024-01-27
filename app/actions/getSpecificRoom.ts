@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getSpecificRoom = async (getSpecificRoom: string) => {
+const getSpecificRoom = async (getSpecificRoom: string | undefined) => {
   try {
     const response = await axios.get(
       `http://localhost:3000/api/rooms/${getSpecificRoom}`

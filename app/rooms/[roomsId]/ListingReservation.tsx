@@ -13,6 +13,10 @@ interface ListingReservationProps {
   onSubmit: () => void;
   disabled?: boolean;
   disabledDates: Date[];
+  setFullBoard: (value: number) => void;
+  setHalfBoard: (value: number) => void;
+  halfBoardPrice: number;
+  fullBoardPrice: number;
 }
 
 const ListingReservation: React.FC<ListingReservationProps> = ({
@@ -23,7 +27,20 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
   onSubmit,
   disabled,
   disabledDates,
+  setFullBoard,
+  setHalfBoard,
+  halfBoardPrice,
+  fullBoardPrice,
 }) => {
+  const handleOptionChange = (option: any) => {
+    if (option === "full") {
+      setHalfBoard(0); // Reset halfBoard if fullBoard is selected
+      setFullBoard(fullBoardPrice);
+    } else if (option === "half") {
+      setFullBoard(0); // Reset fullboard if fullBoard is selected
+      setHalfBoard(halfBoardPrice);
+    }
+  };
   return (
     <div
       className="
@@ -47,6 +64,43 @@ const ListingReservation: React.FC<ListingReservationProps> = ({
         disabledDates={disabledDates}
         onChange={(value) => onChangeDate(value.selection)}
       />
+      <hr />
+      <div className="p-4">
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-2 justify-center">
+            <div className="font-bold">Select Board Option</div>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="radio"
+                name="boardOption"
+                value="full"
+                onChange={() => handleOptionChange("full")}
+              />
+              <span className="ml-1">
+                Full Board{" "}
+                <span className="font-bold">({fullBoardPrice}/-)</span>
+              </span>
+            </label>
+          </div>
+          <div className="flex flex-col justify-center items-center">
+            <label className="inline-flex items-center gap-2">
+              <input
+                type="radio"
+                name="boardOption"
+                value="half"
+                onChange={() => handleOptionChange("half")}
+              />
+              <span className="ml-1">
+                Half Board{" "}
+                <span className="font-bold">({halfBoardPrice}/-)</span>
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+
       <hr />
       <div className="p-4">
         <Button disabled={disabled} label="Reserve" onClick={onSubmit} />
