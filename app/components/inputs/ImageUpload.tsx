@@ -12,16 +12,16 @@ declare global {
 const uploadPreset = "yzlwi3tk";
 
 interface ImageUploadProps {
-  onChange: (value: string) => void;
-  value: string;
+  onChange: (value: string[]) => void;
+  value: string[];
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
   const handleUpload = useCallback(
     (result: any) => {
-      onChange(result.info.secure_url);
+      onChange([...value, result.info.secure_url]);
     },
-    [onChange]
+    [onChange, value]
   );
 
   return (
@@ -29,7 +29,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
       onUpload={handleUpload}
       uploadPreset={uploadPreset}
       options={{
-        maxFiles: 1,
+        maxFiles: 3,
       }}
     >
       {(widgetProps) => {
@@ -56,19 +56,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, value }) => {
           >
             <TbPhotoPlus size={50} />
             <div className="font-semibold text-lg">Click to upload</div>
-            {value && (
-              <div
-                className="
-                absolute inset-0 w-full h-full"
-              >
+            {value.map((imageUrl, index) => (
+              <div key={index} className="absolute inset-0 w-full h-full">
                 <Image
                   fill
                   style={{ objectFit: "cover" }}
-                  src={value}
-                  alt="House"
+                  src={imageUrl}
+                  alt={`Image ${index + 1}`}
                 />
               </div>
-            )}
+            ))}
           </div>
         );
       }}

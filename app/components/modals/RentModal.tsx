@@ -60,7 +60,7 @@ const RentModal = () => {
       guestCount: 1,
       roomCount: 1,
       bathroomCount: 1,
-      imageSrc: "",
+      imageSrc: [],
       price: 1,
       title: "",
       description: "",
@@ -114,21 +114,21 @@ const RentModal = () => {
     const requestData = { ...data, currentUserId };
     console.log(requestData, "data room");
 
-    // axios
-    //   .post("/api/rooms", requestData)
-    //   .then(() => {
-    //     toast.success("Rooms created!");
-    //     router.refresh();
-    //     reset();
-    //     setStep(STEPS.CATEGORY);
-    //     rentModal.onClose();
-    //   })
-    //   .catch(() => {
-    //     toast.error("Something went wrong.");
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-    //   });
+    axios
+      .post("/api/rooms", requestData)
+      .then(() => {
+        toast.success("Rooms created!");
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+      })
+      .catch(() => {
+        toast.error("Something went wrong.");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const actionLabel = useMemo(() => {

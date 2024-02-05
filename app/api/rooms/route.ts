@@ -71,6 +71,8 @@ export async function POST(req: NextRequest) {
       userId,
       // createdAt,
     } = await req.json();
+    console.log("req", imageSrc);
+
     let filename = "";
     // if (imageSrc) {
     //   const filePath = imageSrc.target.value;
@@ -78,13 +80,14 @@ export async function POST(req: NextRequest) {
     //   filename = pathSegments[pathSegments.length - 1];
     // }
     // Perform the necessary operations with the data (e.g., insert into the database)
+
     await query({
       query:
         "INSERT INTO rooms (title, description,imageSrc,category,roomCount,bathroomCount,guestCount,price,locationValue,fullBoardPrice,halfBoardPrice,userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)",
       values: [
         title,
         description,
-        imageSrc,
+        filename,
         category,
         roomCount,
         bathroomCount,
