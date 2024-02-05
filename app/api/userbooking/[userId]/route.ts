@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/app/database/db";
 
+// This is for getting all bookings details via id
 export async function GET(
   req: NextRequest,
   { params }: { params: { userId: string } }
@@ -14,6 +15,7 @@ export async function GET(
   return NextResponse.json(bookings);
 }
 
+// This is for deleting userbookings details
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { bookingId: string } }

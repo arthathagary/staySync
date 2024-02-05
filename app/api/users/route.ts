@@ -2,6 +2,7 @@ import { decodeToken } from "@/app/actions/DecodeToken";
 import { query } from "@/app/database/db";
 import { NextRequest, NextResponse } from "next/server";
 
+//getting specific userdata with email
 export async function GET(req: NextRequest) {
   const tokenWithBearer = req.headers.get("authorization");
   const token = tokenWithBearer?.replace("Bearer ", "");

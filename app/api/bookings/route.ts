@@ -3,6 +3,7 @@ import { query } from "@/app/database/db";
 import getRooms from "@/app/actions/getRoomsById";
 import axios from "axios";
 
+//getting all bookings details from db
 export async function GET(req: NextRequest) {
   const bookings = await query({
     query: "SELECT * FROM bookings",
@@ -11,6 +12,7 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(bookings);
 }
 
+//adding bookings details to db
 export async function POST(req: NextRequest) {
   const body = await req.json();
   const { userId, roomId, startDate, endDate, totalPrice } = body;

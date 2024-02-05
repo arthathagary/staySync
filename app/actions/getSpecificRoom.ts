@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//getting specific room details from db
 const getSpecificRoom = async (getSpecificRoom: string | undefined) => {
   try {
     const response = await axios.get(

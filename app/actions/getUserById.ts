@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//getting user details from db with the help of userId
 const getUserById = async (userId: string) => {
   try {
     const response = await axios.get(

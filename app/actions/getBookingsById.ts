@@ -3,6 +3,8 @@ import axios from "axios";
 interface IParams {
   bookingsId?: string;
 }
+
+//getting specific bookings details from db with it's id
 const getBookingsById = async (params: IParams) => {
   try {
     const { bookingsId } = params;

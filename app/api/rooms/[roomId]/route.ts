@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/app/database/db";
 
+// This is for getting specific rooms details with room id
 export async function GET(
   req: NextRequest,
   { params }: { params: { roomId: string } }
@@ -40,6 +41,7 @@ export async function DELETE(
   return NextResponse.json({ message: "Room deleted successfully" });
 }
 
+// This is for updating specific rooms details with room id
 export async function PUT(
   req: NextRequest,
   { params }: { params: { roomId: string } }

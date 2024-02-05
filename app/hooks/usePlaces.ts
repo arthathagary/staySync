@@ -1,6 +1,8 @@
 const cities = [
   { value: "Colombo", label: "Colombo" },
   { value: "Trincomalee", label: "Trincomalee" },
+  { value: "Kandy", label: "Kandy" },
+  { value: "Galle", label: "Galle" },
 ];
 const formattedCities = cities.map((city) => ({
   value: city.value,

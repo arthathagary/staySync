@@ -117,6 +117,11 @@ const UserMenu = () => {
                 <MenuItem label="Manager Area" />
               </Link>
             )}
+
+            <Link href="/aboutus">
+              {" "}
+              <MenuItem label="About Us" />
+            </Link>
           </div>
         </div>
       )}

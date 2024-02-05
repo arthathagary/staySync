@@ -53,7 +53,9 @@ const LoginModal = () => {
         }
       })
       .catch((error: any) => {
-        toast.error(error);
+        // Extract error message from the error object
+        const errorMessage = "Invalid Credentials! Please try again.";
+        toast.error(errorMessage);
       })
       .finally(() => {
         setIsLoading(false);

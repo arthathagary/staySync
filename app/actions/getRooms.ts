@@ -8,6 +8,7 @@ export interface IListingsParams {
   category?: string;
 }
 
+//getting rooms details from db
 export const getRooms = async (params: IListingsParams) => {
   const {
     // userId,

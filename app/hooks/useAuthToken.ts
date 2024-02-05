@@ -1,6 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
 
+/**
+ * Custom hook to access the auth token from localStorage
+ * and update the token state when it changes
+ */
 const useAuthToken = () => {
   const [token, setToken] = useState(localStorage.getItem("token"));
 

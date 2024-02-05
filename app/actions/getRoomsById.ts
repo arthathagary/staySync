@@ -3,6 +3,8 @@ import axios from "axios";
 interface IParams {
   roomsId?: string;
 }
+
+//getting specific rooms details from db with it's id
 const getRooms = async (params: IParams) => {
   try {
     const { roomsId } = params;

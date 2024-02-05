@@ -1,5 +1,6 @@
 import axios from "axios";
 
+//getting all bookings details from db with their user id
 const getUserBooking = async (userId: string) => {
   try {
     const response = await axios.get(

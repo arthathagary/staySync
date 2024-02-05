@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import useRentModal from "@/app/hooks/useRentModal";
 
@@ -18,6 +18,7 @@ import { categories } from "@/app/components/navbar/Categories";
 import Input from "../inputs/Input";
 import Heading from "../Heading";
 import ImageUpload from "../inputs/ImageUpload";
+import { decodeToken } from "@/app/actions/DecodeToken";
 
 enum STEPS {
   CATEGORY = 0,
@@ -35,6 +36,15 @@ const RentModal = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [currentUserId, setCurrentUserId] = useState<string>("");
+
+  useEffect(() => {
+    const jwt = localStorage.getItem("token");
+    const user = decodeToken(jwt!);
+    if (user) {
+      setCurrentUserId(user.id);
+    }
+  }, [currentUserId]);
 
   const {
     register,
@@ -101,21 +111,24 @@ const RentModal = () => {
 
     setIsLoading(true);
 
-    axios
-      .post("/api/rooms", data)
-      .then(() => {
-        toast.success("Rooms created!");
-        router.refresh();
-        reset();
-        setStep(STEPS.CATEGORY);
-        rentModal.onClose();
-      })
-      .catch(() => {
-        toast.error("Something went wrong.");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+    const requestData = { ...data, currentUserId };
+    console.log(requestData, "data room");
+
+    // axios
+    //   .post("/api/rooms", requestData)
+    //   .then(() => {
+    //     toast.success("Rooms created!");
+    //     router.refresh();
+    //     reset();
+    //     setStep(STEPS.CATEGORY);
+    //     rentModal.onClose();
+    //   })
+    //   .catch(() => {
+    //     toast.error("Something went wrong.");
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   const actionLabel = useMemo(() => {

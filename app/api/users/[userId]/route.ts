@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/app/database/db";
 
+// This is for getting a specific user by its ID
 export async function GET(
   req: NextRequest,
   { params }: { params: { userId: string } }

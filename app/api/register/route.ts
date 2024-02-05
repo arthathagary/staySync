@@ -11,6 +11,25 @@ export async function POST(request: Request) {
 
   console.log(body);
 
+  const existingUser = await query({
+    query: `
+      SELECT * FROM Users
+      WHERE email = ?
+    `,
+    values: [email],
+  });
+
+  const isEmailRegistered =
+    Array.isArray(existingUser) && existingUser.length > 0;
+
+  if (isEmailRegistered) {
+    // Email is already registered, show toast or handle accordingly
+    return NextResponse.json(
+      { error: "Email is already registered" },
+      { status: 400 } // Bad Request status
+    );
+  }
+
   const hashedPassword = await bcrypt.hash(password, 12);
 
   try {

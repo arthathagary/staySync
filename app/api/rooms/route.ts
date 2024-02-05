@@ -1,7 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
 import { query } from "@/app/database/db";
-import { IListingsParams } from "@/app/actions/getRooms";
+import { NextRequest, NextResponse } from "next/server";
 
+// This is for getting all rooms details with search values
 export async function GET(req: NextRequest) {
   try {
     const url = new URL(req.url);
@@ -53,9 +53,9 @@ export async function GET(req: NextRequest) {
   }
 }
 
+// This is for adding rooms details
 export async function POST(req: NextRequest) {
   try {
-    // Assuming you are expecting some data in the request body
     const {
       category,
       location,
@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
       description,
       fullBoard,
       halfBoard,
+      userId,
       // createdAt,
     } = await req.json();
     let filename = "";
@@ -79,7 +80,7 @@ export async function POST(req: NextRequest) {
     // Perform the necessary operations with the data (e.g., insert into the database)
     await query({
       query:
-        "INSERT INTO rooms (title, description,imageSrc,category,roomCount,bathroomCount,guestCount,price,locationValue,fullBoardPrice,halfBoardPrice) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?)",
+        "INSERT INTO rooms (title, description,imageSrc,category,roomCount,bathroomCount,guestCount,price,locationValue,fullBoardPrice,halfBoardPrice,userId) VALUES (?, ?, ?, ?, ?, ?, ?, ?,?,?,?,?)",
       values: [
         title,
         description,
@@ -92,7 +93,7 @@ export async function POST(req: NextRequest) {
         location.value,
         fullBoard,
         halfBoard,
-        // userId,
+        userId,
       ],
     });
 

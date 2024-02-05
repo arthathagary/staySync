@@ -10,6 +10,7 @@ interface User {
   hashedPassword: string;
 }
 
+//this is responsible for validated login credentials
 export async function POST(request: Request) {
   try {
     const body = await request.json();

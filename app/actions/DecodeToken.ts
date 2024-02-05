@@ -6,6 +6,7 @@ interface JwtPayload {
   email: string;
 }
 
+//this is for decode the jwt token details
 export const decodeToken = (token: string) => {
   try {
     const decoded = jwt.decode(token) as JwtPayload;
